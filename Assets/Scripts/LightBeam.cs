@@ -10,6 +10,7 @@ public class LightBeam : MonoBehaviour
     [SerializeField] private int maxReflections = 10;
     [SerializeField] private float beamWidth = 0.1f;
     [SerializeField] private Color beamColor = Color.yellow;
+    [SerializeField] private float reflectionOffset = 0.01f; // Small offset to avoid self-collision
     
     private LineRenderer lineRenderer;
     private LightSource lightSource;
@@ -73,7 +74,7 @@ public class LightBeam : MonoBehaviour
                 {
                     // Calculate reflection direction
                     currentDirection = Vector3.Reflect(currentDirection, hit.normal);
-                    currentPosition = hit.point + currentDirection * 0.01f; // Small offset to avoid self-collision
+                    currentPosition = hit.point + currentDirection * reflectionOffset;
                     reflectionsCount++;
                 }
                 else
