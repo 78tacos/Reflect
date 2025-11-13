@@ -25,11 +25,16 @@ namespace VolumetricLines
 	/// </summary>
 	[RequireComponent(typeof(MeshFilter))]
 	[RequireComponent(typeof(MeshRenderer))]
+	[RequireComponent(typeof(CapsuleCollider))]
 	// [ExecuteInEditMode]
 	public class VolumetricLineBehavior : MonoBehaviour 
 	{
 		public float laserSpeed = 0.001f;
+		public float spawnOffset = 0.01f;
+		public GameObject laserPrefab;
 		public bool isHit = false;
+
+		private CapsuleCollider m_collider;
 
 		// Used to compute the average value of all the Vector3's components:
 		static readonly Vector3 Average = new Vector3(1f/3f, 1f/3f, 1f/3f);
@@ -147,6 +152,7 @@ namespace VolumetricLines
 					m_material.SetFloat("_LineWidth", m_lineWidth);
 				}
 				UpdateBounds();
+				UpdateCollider();
 			}
 		}
 
@@ -349,14 +355,47 @@ namespace VolumetricLines
 					mesh.vertices = vertexPositions;
 					mesh.normals = other;
 					UpdateBounds();
+					UpdateCollider();
 				}
 			}
 		}
+
+		public void UpdateCollider()
+		{
+			if (null == m_collider)
+			{
+				// Try to get the component if it's null
+				m_collider = GetComponent<CapsuleCollider>();
+				if (null == m_collider)
+				{
+					// Still null? Log an error and exit.
+					Debug.LogError("VolumetricLineBehavior: No CapsuleCollider found.");
+					return;
+				}
+			}
+
+			// Ensure the collider is Y-Axis aligned
+			m_collider.direction = 1; // 1 = Y-Axis
+
+			// Calculate the total length of the line
+			float length = Vector3.Distance(m_startPos, m_endPos);
+
+			// Calculate the center point of the line
+			Vector3 center = (m_startPos + m_endPos) / 2f;
+
+			// Set the collider properties
+			m_collider.center = center;
+			m_collider.height = length;
+			// m_collider.radius = m_lineWidth / 2f; // Use half the line width for the radius
+		}
+
 		#endregion
 
 		#region event functions
 		void Start () 
 		{
+			m_collider = GetComponent<CapsuleCollider>();
+
 			Mesh mesh = new Mesh();
 			m_meshFilter = GetComponent<MeshFilter>();
 			m_meshFilter.mesh = mesh;
@@ -391,10 +430,14 @@ namespace VolumetricLines
 
 
 			// This will increase the length of the line
-			Vector3 currentStartPos = this.StartPos;
-			currentStartPos.y += laserSpeed;
+			if (!this.isHit)
+            {
+                Vector3 currentStartPos = this.StartPos;
+				currentStartPos.y += laserSpeed;
 
-			this.StartPos = currentStartPos;
+				this.StartPos = currentStartPos;
+            }
+
 
 			if (transform.hasChanged)
 			{
@@ -414,6 +457,7 @@ namespace VolumetricLines
 			CreateMaterial();
 			SetAllMaterialProperties();
 			UpdateBounds();
+			UpdateCollider();
 		}
 	
 		void OnDrawGizmos()
@@ -421,6 +465,24 @@ namespace VolumetricLines
 			Gizmos.color = Color.green;
 			Gizmos.DrawLine(gameObject.transform.TransformPoint(m_startPos), gameObject.transform.TransformPoint(m_endPos));
 		}
+		#endregion
+
+		#region Collision Stuff
+
+		void OnTriggerEnter(Collider other)
+		{
+
+			if (this.isHit) return;
+
+			//Mirror mirror = other.GetComponent<Mirror>();
+
+			if (other.CompareTag("Mirror"))
+            {
+                this.isHit = true;
+				Debug.Log("Laser hit a mirror trigger!");
+            }
+		}
+
 		#endregion
 	}
 }
