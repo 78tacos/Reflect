@@ -25,9 +25,12 @@ namespace VolumetricLines
 	/// </summary>
 	[RequireComponent(typeof(MeshFilter))]
 	[RequireComponent(typeof(MeshRenderer))]
-	[ExecuteInEditMode]
+	// [ExecuteInEditMode]
 	public class VolumetricLineBehavior : MonoBehaviour 
 	{
+		public float laserSpeed = 0.001f;
+		public bool isHit = false;
+
 		// Used to compute the average value of all the Vector3's components:
 		static readonly Vector3 Average = new Vector3(1f/3f, 1f/3f, 1f/3f);
 
@@ -385,7 +388,14 @@ namespace VolumetricLines
 		void Update()
 		{
 
-			// m_startPos.y += 0.001f;
+
+
+			// This will increase the length of the line
+			Vector3 currentStartPos = this.StartPos;
+			currentStartPos.y += laserSpeed;
+
+			this.StartPos = currentStartPos;
+
 			if (transform.hasChanged)
 			{
 				UpdateLineScale();
