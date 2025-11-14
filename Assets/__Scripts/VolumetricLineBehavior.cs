@@ -30,9 +30,13 @@ namespace VolumetricLines
 	public class VolumetricLineBehavior : MonoBehaviour 
 	{
 		public float laserSpeed = 0.001f;
-		public float spawnOffset = 0.01f;
+		public float spawnOffset = 0.0f;
 		public GameObject laserPrefab;
+		[Tooltip("If true, the laser extends by moving its start point; otherwise it grows by moving the end point.")]
+		public bool growFromStart = true;
 		public bool isHit = false;
+		[Tooltip("Keep the original start point (e.g. turret muzzle) after the laser collides with a mirror.")]
+		public bool lockStartOnHit = true;
 
 		private CapsuleCollider m_collider;
 
@@ -94,6 +98,9 @@ namespace VolumetricLines
 		/// </summary>
 		private MeshFilter m_meshFilter;
 		#endregion
+
+		private Vector3 m_initialStartPos;
+		private bool m_hasInitialStart;
 
 		#region properties
 		/// <summary>
@@ -400,6 +407,7 @@ namespace VolumetricLines
 			m_meshFilter = GetComponent<MeshFilter>();
 			m_meshFilter.mesh = mesh;
 			SetStartAndEndPoints(m_startPos, m_endPos);
+			RecordInitialStart();
 			mesh.uv = VolumetricLineVertexData.TexCoords;
 			mesh.uv2 = VolumetricLineVertexData.VertexOffsets;
 			mesh.SetIndices(VolumetricLineVertexData.Indices, MeshTopology.Triangles, 0);
@@ -432,10 +440,24 @@ namespace VolumetricLines
 			// This will increase the length of the line
 			if (!this.isHit)
             {
-                Vector3 currentStartPos = this.StartPos;
-				currentStartPos.y += laserSpeed;
+                Vector3 growthDirection = (this.EndPos - this.StartPos).normalized;
+				if (growthDirection.sqrMagnitude <= Mathf.Epsilon)
+				{
+					growthDirection = Vector3.forward;
+				}
 
-				this.StartPos = currentStartPos;
+				if (growFromStart)
+				{
+					Vector3 currentStartPos = this.StartPos;
+					currentStartPos -= growthDirection * laserSpeed;
+					this.StartPos = currentStartPos;
+				}
+				else
+				{
+					Vector3 currentEndPos = this.EndPos;
+					currentEndPos += growthDirection * laserSpeed;
+					this.EndPos = currentEndPos;
+				}
             }
 
 
@@ -471,16 +493,143 @@ namespace VolumetricLines
 
 		void OnTriggerEnter(Collider other)
 		{
+			if (this.isHit || !other.CompareTag("Mirror"))
+			{
+				return;
+			}
 
-			if (this.isHit) return;
+			this.isHit = true;
 
-			//Mirror mirror = other.GetComponent<Mirror>();
+			Vector3 incomingDirection = GetIncomingDirection();
 
-			if (other.CompareTag("Mirror"))
-            {
-                this.isHit = true;
-				Debug.Log("Laser hit a mirror trigger!");
-            }
+			if (TryGetHitInfo(other, incomingDirection, out RaycastHit hitInfo))
+			{
+				Vector3 orientedNormal = EnsureNormalFacesLaser(hitInfo.normal, incomingDirection);
+				Vector3 reflectedDirection = Vector3.Reflect(incomingDirection, orientedNormal).normalized;
+				ClampLaserToHit(hitInfo.point);
+				RestoreInitialStart();
+				SpawnReflectedLaser(hitInfo.point, reflectedDirection);
+			}
+			else
+			{
+				Vector3 fallbackNormal = EnsureNormalFacesLaser(GetMirrorNormal(other), incomingDirection);
+				Vector3 reflectedDirection = Vector3.Reflect(incomingDirection, fallbackNormal).normalized;
+				Vector3 fallbackPoint = other.ClosestPoint(transform.position);
+				ClampLaserToHit(fallbackPoint);
+				RestoreInitialStart();
+				SpawnReflectedLaser(fallbackPoint, reflectedDirection);
+			}
+
+			Debug.Log("Laser hit a mirror trigger!");
+		}
+
+		private Vector3 GetIncomingDirection()
+		{
+			Vector3 worldStart = transform.TransformPoint(StartPos);
+			Vector3 worldEnd = transform.TransformPoint(EndPos);
+			Vector3 direction = (worldEnd - worldStart).normalized;
+
+			if (direction.sqrMagnitude <= Mathf.Epsilon)
+			{
+				direction = transform.forward;
+			}
+
+			return direction;
+		}
+
+		private Vector3 GetMirrorNormal(Collider mirrorCollider)
+		{
+			Mirror mirror = mirrorCollider.GetComponent<Mirror>();
+			if (mirror != null)
+			{
+				return mirror.GetWorldNormal();
+			}
+
+			return mirrorCollider.transform.forward;
+		}
+
+		private bool TryGetHitInfo(Collider mirrorCollider, Vector3 incomingDirection, out RaycastHit hitInfo)
+		{
+			Vector3 worldStart = transform.TransformPoint(StartPos);
+			Vector3 worldEnd = transform.TransformPoint(EndPos);
+			float maxDistance = Vector3.Distance(worldStart, worldEnd) + 2f;
+
+			Ray ray = new Ray(worldStart, incomingDirection);
+			if (mirrorCollider.Raycast(ray, out hitInfo, maxDistance))
+			{
+				return true;
+			}
+
+			hitInfo = new RaycastHit
+			{
+				point = worldEnd,
+				normal = GetMirrorNormal(mirrorCollider)
+			};
+			return false;
+		}
+
+		private Vector3 EnsureNormalFacesLaser(Vector3 surfaceNormal, Vector3 incomingDirection)
+		{
+			Vector3 normalizedNormal = surfaceNormal.normalized;
+			if (Vector3.Dot(incomingDirection, normalizedNormal) > 0f)
+			{
+				normalizedNormal = -normalizedNormal;
+			}
+
+			return normalizedNormal;
+		}
+
+		private void ClampLaserToHit(Vector3 hitPoint)
+		{
+			Vector3 localHit = transform.InverseTransformPoint(hitPoint);
+			EndPos = localHit;
+		}
+
+		private void SpawnReflectedLaser(Vector3 hitPoint, Vector3 reflectedDirection)
+		{
+			if (laserPrefab == null || reflectedDirection.sqrMagnitude <= Mathf.Epsilon)
+			{
+				Debug.LogWarning("VolumetricLineBehavior: Unable to spawn reflected laser. Missing prefab or invalid direction.");
+				return;
+			}
+
+			Vector3 spawnPosition = hitPoint + reflectedDirection * spawnOffset;
+			Quaternion spawnRotation = Quaternion.LookRotation(reflectedDirection, Vector3.up);
+
+			GameObject newLaser = Instantiate(laserPrefab, spawnPosition, spawnRotation);
+			VolumetricLineBehavior newBehavior = newLaser.GetComponent<VolumetricLineBehavior>();
+
+			if (newBehavior == null)
+			{
+				Debug.LogWarning("VolumetricLineBehavior: Spawned prefab does not contain VolumetricLineBehavior.");
+				return;
+			}
+
+			float currentLength = (EndPos - StartPos).magnitude;
+			if (currentLength <= Mathf.Epsilon)
+			{
+				currentLength = 1f;
+			}
+
+			newBehavior.SetStartAndEndPoints(Vector3.zero, Vector3.forward * currentLength);
+			newBehavior.growFromStart = false;
+			newBehavior.isHit = false;
+			newBehavior.lockStartOnHit = true;
+			newBehavior.RecordInitialStart();
+		}
+
+		public void RecordInitialStart()
+		{
+			m_initialStartPos = StartPos;
+			m_hasInitialStart = true;
+		}
+
+		private void RestoreInitialStart()
+		{
+			if (lockStartOnHit && m_hasInitialStart)
+			{
+				StartPos = m_initialStartPos;
+			}
 		}
 
 		#endregion
