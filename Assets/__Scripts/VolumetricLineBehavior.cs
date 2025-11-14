@@ -548,6 +548,7 @@ namespace VolumetricLines
             } else if (other.CompareTag("wall"))
             {
                 this.isHit = true;
+				Debug.Log("I just hit a wall!");
             }
 		}
 
