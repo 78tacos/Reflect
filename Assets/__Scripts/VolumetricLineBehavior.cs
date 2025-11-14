@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+
 
 namespace VolumetricLines
 {
@@ -30,9 +32,11 @@ namespace VolumetricLines
 	public class VolumetricLineBehavior : MonoBehaviour 
 	{
 		public float laserSpeed = 0.001f;
-		public float spawnOffset = 0.01f;
+		public float spawnOffset = 1.0f;
 		public GameObject laserPrefab;
 		public bool isHit = false;
+
+		private bool m_canTrigger = false;
 
 		private CapsuleCollider m_collider;
 
@@ -394,17 +398,35 @@ namespace VolumetricLines
 		#region event functions
 		void Start () 
 		{
+			// --- RESET TO DEFAULT STATE ---
+			// This fixes the "isHit is already true" bug
+			this.isHit = false; 
+
+			// This resets the "grace period" timer
+			this.m_canTrigger = false; 
+
+			// This fixes the "laser is already long" bug
+			// It resets the laser's "tip" (m_startPos)
+			// to its "base" (m_endPos), making it zero-length.
+			this.m_startPos = this.m_endPos;
+			// ------------------------------
+			
 			m_collider = GetComponent<CapsuleCollider>();
 
 			Mesh mesh = new Mesh();
 			m_meshFilter = GetComponent<MeshFilter>();
 			m_meshFilter.mesh = mesh;
+			
+			// This will now use our "reset" start and end points
 			SetStartAndEndPoints(m_startPos, m_endPos);
+
 			mesh.uv = VolumetricLineVertexData.TexCoords;
 			mesh.uv2 = VolumetricLineVertexData.VertexOffsets;
 			mesh.SetIndices(VolumetricLineVertexData.Indices, MeshTopology.Triangles, 0);
 			CreateMaterial();
-			// TODO: Need to set vertices before assigning new Mesh to the MeshFilter's mesh property => Why?
+			
+			// This starts the grace period
+			StartCoroutine(EnableTriggersAfterDelay(0.1f));
 		}
 
 		void OnDestroy()
@@ -472,15 +494,70 @@ namespace VolumetricLines
 		void OnTriggerEnter(Collider other)
 		{
 
-			if (this.isHit) return;
+			if (!this.m_canTrigger || this.isHit) return;
 
-			//Mirror mirror = other.GetComponent<Mirror>();
+			Mirror mirror = other.GetComponent<Mirror>();
 
 			if (other.CompareTag("Mirror"))
             {
+
+				if (mirror == null) return;
+
                 this.isHit = true;
 				Debug.Log("Laser hit a mirror trigger!");
+
+				Vector3 mirrorNormal = other.transform.TransformDirection(mirror.surfaceNormal);
+				Vector3 incomingDirection = this.transform.up;
+				Vector3 hitPosition = transform.TransformPoint(m_startPos);
+
+				Quaternion spawnRotation;
+				Vector3 spawnPosition;
+
+				switch (mirror.mirrorType)
+                {
+                    
+					case MirrorType.Redirect:
+						Vector3 newDirection = mirrorNormal;
+						spawnRotation = Quaternion.FromToRotation(Vector3.up, newDirection);
+						spawnPosition = hitPosition + (newDirection * spawnOffset);
+
+						Debug.DrawRay(hitPosition, newDirection * 5f, Color.green, 10f);
+
+						break;
+
+					case MirrorType.Reflect:
+						Vector3 reflectDirection = Vector3.Reflect(incomingDirection, mirrorNormal);
+						spawnRotation = Quaternion.FromToRotation(Vector3.up, reflectDirection);
+						spawnPosition = hitPosition + (mirrorNormal * spawnOffset);
+
+						Debug.DrawRay(hitPosition, reflectDirection * 5f, Color.blue, 10f);
+
+						break;
+
+					default:
+						spawnRotation = Quaternion.identity;
+						spawnPosition = hitPosition;
+						break;
+                }
+
+				if (laserPrefab != null)
+                {
+                    Instantiate(laserPrefab, spawnPosition, spawnRotation);
+                }
+
+            } else if (other.CompareTag("wall"))
+            {
+                this.isHit = true;
             }
+		}
+
+		private IEnumerator EnableTriggersAfterDelay(float delay)
+		{
+			// Wait for the specified amount of time
+			yield return new WaitForSeconds(delay);
+
+			// After the delay, allow this laser to trigger
+			m_canTrigger = true;
 		}
 
 		#endregion

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4313035329473009063}
   - component: {fileID: 1473937457}
   m_Layer: 7
-  m_Name: SingleLine-LightSaber
+  m_Name: Laserbeam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,15 +98,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0884dceb0d4308c4eb8bc763c8f8deae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserSpeed: 0.001
+  laserSpeed: 0.0035
   spawnOffset: 0.01
   laserPrefab: {fileID: 122648}
   isHit: 0
   m_templateMaterial: {fileID: 2100000, guid: 974b33ccbd786464a825203eb88b8dab, type: 2}
   m_doNotOverwriteTemplateMaterialProperties: 0
-  m_startPos: {x: 0, y: 0.4, z: 0}
+  m_startPos: {x: 0, y: 0.2, z: 0}
   m_endPos: {x: 0, y: 0, z: 0}
-  m_lineColor: {r: 0.81960785, g: 0.56018955, b: 0, a: 1}
+  m_lineColor: {r: 1, g: 0.0141509175, b: 0.10169803, a: 1}
   m_lineWidth: 1
   m_lightSaberFactor: 0.96
 --- !u!136 &4313035329473009063
