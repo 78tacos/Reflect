@@ -10,13 +10,12 @@ public class GridGenerator : MonoBehaviour
     private float scale = 0.3f;
 
     public GameObject osCubePrefab;
-    private Vector3 cubeScale;
 
-    #if UNITY_EDITOR
-    [ContextMenu("Generate Grid")]
+#if UNITY_EDITOR
+[ContextMenu("Generate Grid")]
     void GenerateGrid() 
     {
-        cubeScale = Vector3.one * scale;
+        Vector3 cubeScale = Vector3.one * scale;
         float offsetX = (row - 1) * spacing * 0.5f;
         float offsetZ = (column - 1) * spacing * 0.5f;
 
@@ -29,5 +28,5 @@ public class GridGenerator : MonoBehaviour
             }
         }
     }
-}
 #endif
+}
