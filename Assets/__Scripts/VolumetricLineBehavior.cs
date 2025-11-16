@@ -496,15 +496,14 @@ namespace VolumetricLines
 
 			if (!this.m_canTrigger || this.isHit) return;
 
-			Mirror mirror = other.GetComponent<Mirror>();
-
 			if (other.CompareTag("Mirror"))
             {
+
+				Mirror mirror = other.GetComponent<Mirror>();
 
 				if (mirror == null) return;
 
                 this.isHit = true;
-				Debug.Log("Laser hit a mirror trigger!");
 
 				Vector3 mirrorNormal = other.transform.TransformDirection(mirror.surfaceNormal);
 				Vector3 incomingDirection = this.transform.up;
@@ -548,8 +547,11 @@ namespace VolumetricLines
             } else if (other.CompareTag("wall"))
             {
                 this.isHit = true;
-				Debug.Log("I just hit a wall!");
-            }
+            } else if (other.CompareTag("Goal")) {
+
+				Goal goal = other.GetComponent<Goal>();
+				goal.GoalHit();
+			}
 		}
 
 		private IEnumerator EnableTriggersAfterDelay(float delay)

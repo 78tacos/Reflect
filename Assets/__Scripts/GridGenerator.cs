@@ -6,9 +6,7 @@ public class GridGenerator : MonoBehaviour
 {
     public int row = 4;
     public int column = 4;
-    public float spacing = 1.2f;
-
-    [SerializeField]
+    private float spacing = 0.7f;
     private float scale = 0.3f;
 
     public GameObject osCubePrefab;

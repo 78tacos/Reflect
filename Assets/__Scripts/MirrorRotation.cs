@@ -23,6 +23,13 @@ public class MirrorRotation : MonoBehaviour
 
     private bool isRotating = false;
 
+    private Mirror parentMirror;
+
+    void Start()
+    {
+        parentMirror = GetComponentInParent<Mirror>();
+    }
+
     void OnMouseDown() => RotateBy(rotationStep);
 
     public void RotateBy(float degrees)
@@ -62,5 +69,14 @@ public class MirrorRotation : MonoBehaviour
 
         mirror.rotation = end;  // Ensures mirror lands on final rotation
         isRotating = false;
+
+        if ((transform.eulerAngles.y % 90f) == 0f) 
+        {
+            parentMirror.mirrorType = MirrorType.Reflect;
+        } 
+        else
+        {
+            parentMirror.mirrorType = MirrorType.Redirect;
+        }
     }
 }

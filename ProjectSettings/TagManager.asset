@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Mirror
   - wall
+  - Goal
   layers:
   - Default
   - TransparentFX

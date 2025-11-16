@@ -12,7 +12,7 @@ public class Mirror : MonoBehaviour
 {
 
     [Header("Mirror Behavior")]
-    public MirrorType mirrorType = MirrorType.Redirect;
+    public MirrorType mirrorType = MirrorType.Reflect;
 
     [Header("Reflection")]
     [Tooltip("The direction the mirror's surface is facing")]
