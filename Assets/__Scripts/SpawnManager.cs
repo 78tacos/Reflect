@@ -6,11 +6,6 @@ public class SpawnManager : MonoBehaviour
 {
     public List<SpawnLaser> turretPrefabs = new List<SpawnLaser>();
 
-    // void Start () 
-    // {
-
-    // }
-
     #if UNITY_EDITOR
     [ContextMenu("Spawn Lasers")]
     void SpawnLasers() 

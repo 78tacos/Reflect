@@ -20,9 +20,6 @@ public class GridGenerator : MonoBehaviour
         float offsetX = (row - 1) * spacing * 0.5f;
         float offsetZ = (column - 1) * spacing * 0.5f;
 
-        // float offsetX = 0f;
-        // float offsetZ = 0f;
-
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
                 Vector3 pos = new Vector3(i * spacing - offsetX, -12f, j * spacing - offsetZ);
