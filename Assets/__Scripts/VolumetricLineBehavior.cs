@@ -31,7 +31,7 @@ namespace VolumetricLines
 	// [ExecuteInEditMode]
 	public class VolumetricLineBehavior : MonoBehaviour 
 	{
-		public float laserSpeed = 0.001f;
+		public float laserSpeed = 1f;
 		public float spawnOffset = 1.0f;
 		public GameObject laserPrefab;
 		public bool isHit = false;
@@ -455,7 +455,7 @@ namespace VolumetricLines
 			if (!this.isHit)
             {
                 Vector3 currentStartPos = this.StartPos;
-				currentStartPos.y += laserSpeed;
+				currentStartPos.y += laserSpeed * Time.deltaTime;
 
 				this.StartPos = currentStartPos;
             }
