@@ -20,11 +20,13 @@ public class HighlightObject : MonoBehaviour
 
     void OnMouseEnter() 
     {
+        if (Main.Manage.IsPlaying()) return;
         rend.material = highlightMaterial;
     }
 
     void OnMouseExit() 
     {
+        if (Main.Manage.IsPlaying()) return;
         rend.material = normalMaterial;
     }
 

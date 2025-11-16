@@ -18,13 +18,13 @@ public class Mirror : MonoBehaviour
     [Tooltip("The direction the mirror's surface is facing")]
     public Vector3 surfaceNormal = Vector3.forward;
 
-    void OnDrawGizmosSelected()
+    // void OnDrawGizmosSelected()
     
-    {
-        // Draw a cyan line in the Scene view to show the normal's direction
-        Gizmos.color = Color.cyan;
-        Vector3 worldNormal = transform.TransformDirection(surfaceNormal);
-        Gizmos.DrawLine(transform.position, transform.position + worldNormal * 1.0f);
-        Gizmos.DrawSphere(transform.position + worldNormal * 1.0f, 0.1f);
-    }
+    // {
+    //     // Draw a cyan line in the Scene view to show the normal's direction
+    //     Gizmos.color = Color.cyan;
+    //     Vector3 worldNormal = transform.TransformDirection(surfaceNormal);
+    //     Gizmos.DrawLine(transform.position, transform.position + worldNormal * 1.0f);
+    //     Gizmos.DrawSphere(transform.position + worldNormal * 1.0f, 0.1f);
+    // }
 }

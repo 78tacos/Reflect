@@ -30,7 +30,11 @@ public class MirrorRotation : MonoBehaviour
         parentMirror = GetComponentInParent<Mirror>();
     }
 
-    void OnMouseDown() => RotateBy(rotationStep);
+    void OnMouseDown()
+    {
+        if (Main.Manage.IsPlaying()) return;
+        RotateBy(rotationStep);
+    }
 
     public void RotateBy(float degrees)
     {
