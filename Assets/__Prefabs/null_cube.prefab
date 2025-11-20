@@ -98,3 +98,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turret: {fileID: 7022024317146235892, guid: 97d46839a360ab141a5dc7293abf018e, type: 3}
   goal: {fileID: 5924830810985770547, guid: 74379c3a1c93caf43b7ddf2943dc0435, type: 3}
+  nullBlock: {fileID: 4501204142235188029}
+  osCube: {fileID: 4501204142235188029, guid: 45974484913141044819eada29f1b87d, type: 3}

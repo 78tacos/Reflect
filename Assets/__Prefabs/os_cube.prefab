@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8789827226972138236}
   - component: {fileID: 3941289733027625949}
   - component: {fileID: -6607157956437204552}
+  - component: {fileID: -7220709570253989154}
   m_Layer: 0
   m_Name: os_cube
   m_TagString: Untagged
@@ -127,3 +128,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalMaterial: {fileID: 2100000, guid: 7e9174591a771dc4daecd00ffef428b8, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 168a089ba9c6fb249957e9216a212bae, type: 2}
+--- !u!114 &-7220709570253989154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4501204142235188029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1955fa7c7a32a545b59c1dacabbf20f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nullBlock: {fileID: 4501204142235188029, guid: 6a53f89b90e74474a8723ed14610c9cc, type: 3}
