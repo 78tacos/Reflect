@@ -6,7 +6,7 @@ public class SpawnLaser : MonoBehaviour
 {
     public GameObject laserPrefab;
 
-    public void Spawn() {
+    public GameObject Spawn() {
 
         Vector3 euler = Quaternion.identity.eulerAngles;
         euler.y = transform.rotation.eulerAngles.y;
@@ -14,7 +14,6 @@ public class SpawnLaser : MonoBehaviour
 
         Vector3 spawnPos = (Vector3.up * 0.4f) + transform.position;
 
-        Instantiate(laserPrefab, spawnPos, Quaternion.Euler(euler));
-
+        return Instantiate(laserPrefab, spawnPos, Quaternion.Euler(euler));
     }
 }

@@ -29,4 +29,10 @@ public class Goal : MonoBehaviour
 
         Main.Manage.incGoalHit();
     }
+
+    public void ResetGoal()
+    {
+        rend.material = notHitMaterial;
+        isActivated = false;
+    }
 }
