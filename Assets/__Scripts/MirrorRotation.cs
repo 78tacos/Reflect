@@ -33,6 +33,15 @@ public class MirrorRotation : MonoBehaviour
     void OnMouseDown()
     {
         if (Main.Manage.IsPlaying()) return;
+
+        // Shift + Click to remove mirror
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        {
+            Destroy(transform.parent.gameObject);
+            Main.Manage.decMirror();
+            return;
+        }
+        
         RotateBy(rotationStep);
     }
 

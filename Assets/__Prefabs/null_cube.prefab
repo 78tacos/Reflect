@@ -8,24 +8,13 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-<<<<<<< Updated upstream:Assets/__Objects/DefenceLazer/Prefabs/LazerBase.prefab
-  - component: {fileID: 7337844801627918287}
-  - component: {fileID: 3707948958659962240}
-  - component: {fileID: 5296899070450277641}
-  - component: {fileID: 3497299943430616788}
-  m_Layer: 0
-  m_Name: null_cube
-  m_TagString: Untagged
-=======
   - component: {fileID: 432346882039330263}
   - component: {fileID: 9222616270366491465}
   - component: {fileID: 791328730293378966}
   - component: {fileID: -3857797702093300040}
-  - component: {fileID: -6591041814435508955}
   m_Layer: 0
   m_Name: null_cube
-  m_TagString: wall
->>>>>>> Stashed changes:Assets/__Prefabs/null_cube.prefab
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -103,12 +92,6 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4501204142235188029}
   m_Enabled: 1
-<<<<<<< Updated upstream:Assets/__Objects/DefenceLazer/Prefabs/LazerBase.prefab
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -597423674084392571, guid: 27c4eca538e817e47b1219d213f5c394, type: 3}
-=======
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 281571b8d44d0d745bff357c4eb12907, type: 3}
   m_Name: 
@@ -116,18 +99,4 @@ MonoBehaviour:
   turret: {fileID: 7022024317146235892, guid: 97d46839a360ab141a5dc7293abf018e, type: 3}
   goal: {fileID: 5924830810985770547, guid: 74379c3a1c93caf43b7ddf2943dc0435, type: 3}
   nullBlock: {fileID: 4501204142235188029}
-  osCubePrefab: {fileID: 4501204142235188029, guid: 45974484913141044819eada29f1b87d, type: 3}
---- !u!65 &-6591041814435508955
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4501204142235188029}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 1.9999996, z: 1.9999996}
-  m_Center: {x: 0, y: 0, z: 0}
->>>>>>> Stashed changes:Assets/__Prefabs/null_cube.prefab
+  osCube: {fileID: 4501204142235188029, guid: 45974484913141044819eada29f1b87d, type: 3}

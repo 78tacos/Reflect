@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1473937457}
   m_Layer: 7
   m_Name: Laserbeam
-  m_TagString: Untagged
+  m_TagString: Laser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,7 +131,6 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 122648}
   serializedVersion: 2
-<<<<<<< Updated upstream:Assets/__Prefabs/SingleLine-LightSaber.prefab
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
@@ -140,36 +139,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
-=======
-  m_Size: {x: 2, y: 1.9999996, z: 1.9999995}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3941289733027625949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4501204142235188029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33bbc555b61aa7b45b14712f72f4b1e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mirrorPrefab: {fileID: 6406798652635886279, guid: e08760661ef069f47901a65ffa081e6f, type: 3}
-  heightOffset: 0.7
-  alternateCubePrefab: {fileID: 4501204142235188029, guid: 6a53f89b90e74474a8723ed14610c9cc, type: 3}
---- !u!114 &-6607157956437204552
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4501204142235188029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d000c31c8d661ac478ade6e586781744, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  normalMaterial: {fileID: 2100000, guid: 7e9174591a771dc4daecd00ffef428b8, type: 2}
-  highlightMaterial: {fileID: 2100000, guid: 168a089ba9c6fb249957e9216a212bae, type: 2}
->>>>>>> Stashed changes:Assets/__Prefabs/os_cube.prefab
