@@ -10,7 +10,7 @@ public class Goal : MonoBehaviour
     public Material hitMaterial;
 
     private Renderer rend;
-    private bool isActivated;
+    public bool isActivated;
 
     void Start()
     {
@@ -28,5 +28,6 @@ public class Goal : MonoBehaviour
         this.isActivated = true;
 
         Main.Manage.incGoalHit();
+        Main.Manage.goalsHit_display.Add(rend);
     }
 }

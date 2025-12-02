@@ -113,6 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mirrorPrefab: {fileID: 6406798652635886279, guid: e08760661ef069f47901a65ffa081e6f, type: 3}
   heightOffset: 0.7
+  alternateCubePrefab: {fileID: 4501204142235188029, guid: 6a53f89b90e74474a8723ed14610c9cc, type: 3}
 --- !u!114 &-6607157956437204552
 MonoBehaviour:
   m_ObjectHideFlags: 0

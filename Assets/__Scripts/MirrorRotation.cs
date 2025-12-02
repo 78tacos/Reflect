@@ -30,10 +30,19 @@ public class MirrorRotation : MonoBehaviour
         parentMirror = GetComponentInParent<Mirror>();
     }
 
-    void OnMouseDown()
+    public void OnMouseOver()
     {
+
         if (Main.Manage.IsPlaying()) return;
-        RotateBy(rotationStep);
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            RotateBy(rotationStep);
+        } 
+        else if (Input.GetMouseButtonDown(1))
+        {
+            RotateBy(-rotationStep);
+        }
     }
 
     public void RotateBy(float degrees)
@@ -43,6 +52,18 @@ public class MirrorRotation : MonoBehaviour
         Transform mirror = transform.parent;   // Parent object (the real mirror)
 
         float currentY = mirror.eulerAngles.y;
+
+        // if (((currentY) % 90f) != 0f) 
+        // {
+        //     parentMirror.mirrorType = MirrorType.Reflect;
+        // } 
+        // else
+        // {
+        //     parentMirror.mirrorType = MirrorType.Redirect;
+        // }
+
+        parentMirror.mirrorType = (parentMirror.mirrorType == MirrorType.Reflect) ? MirrorType.Redirect : MirrorType.Reflect;
+
         float newY = (currentY + degrees) % 360f;
 
         if (newY < 0) newY += 360f;
@@ -74,13 +95,13 @@ public class MirrorRotation : MonoBehaviour
         mirror.rotation = end;  // Ensures mirror lands on final rotation
         isRotating = false;
 
-        if ((transform.eulerAngles.y % 90f) == 0f) 
-        {
-            parentMirror.mirrorType = MirrorType.Reflect;
-        } 
-        else
-        {
-            parentMirror.mirrorType = MirrorType.Redirect;
-        }
+        // if ((Mathf.Abs(transform.eulerAngles.y) % 90f) == 0f) 
+        // {
+        //     parentMirror.mirrorType = MirrorType.Reflect;
+        // } 
+        // else
+        // {
+        //     parentMirror.mirrorType = MirrorType.Redirect;
+        // }
     }
 }

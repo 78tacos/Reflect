@@ -10,6 +10,11 @@ public class Main : MonoBehaviour
     public static Main Manage; 
 
     public List<SpawnLaser> turretPrefabs = new List<SpawnLaser>();
+    public List<GameObject> lasers;
+    public List<Renderer> goalsHit_display;
+    public Material notHitMaterial;
+
+    public Button playButton;
     public int numGoals = 1;
     public int maxMirrors = 2;
     private int goals;
@@ -25,6 +30,10 @@ public class Main : MonoBehaviour
         mirrorCount = 0;
         isPlaying = false;
         updateMirrorTxt();
+        PlayerPrefs.SetString("LastScene", SceneManager.GetActiveScene().name);
+        PlayerPrefs.Save();
+        lasers = new List<GameObject>();
+        goalsHit_display = new List<Renderer>();
     }
 
     public void incGoalHit()
@@ -32,7 +41,7 @@ public class Main : MonoBehaviour
         goals++;
 
         if (goals == numGoals) {
-            Debug.Log("End game sequence");
+            SceneManager.LoadScene("c_Level");
         }
     }
 
@@ -57,14 +66,30 @@ public class Main : MonoBehaviour
         isPlaying = true;
         foreach (var item in turretPrefabs) 
         {
-            item.Spawn();
+            lasers.Add(item.Spawn());
         }
     }
 
     public void LevelReset()
     {
-        Debug.Log("Add scene manager");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (!isPlaying) return;
+
+        if (playButton != null) playButton.gameObject.SetActive(true);
+
+        foreach (var item in lasers)
+        {
+            Destroy(item);
+        }
+
+        foreach (var item in goalsHit_display)
+        {
+            item.material = notHitMaterial;
+            item.GetComponent<Goal>().isActivated = false;
+        }
+
+        goalsHit_display = new List<Renderer>();
+        goals = 0;
+        isPlaying = false;
     }
 
     public void MainMenu()
@@ -74,6 +99,7 @@ public class Main : MonoBehaviour
 
     public void PlayButton(Button clickedButton)
     {
+        playButton = clickedButton;
         clickedButton.gameObject.SetActive(false);
         SpawnLasers();
     }

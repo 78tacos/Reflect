@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2650,6 +2650,10 @@ MonoBehaviour:
   - {fileID: 349892032}
   - {fileID: 1139208334}
   - {fileID: 1754857629}
+  lasers: []
+  goalsHit_display: []
+  notHitMaterial: {fileID: 2100000, guid: 3f6eb2d4008904d45b4ef90cbe1853a7, type: 2}
+  playButton: {fileID: 0}
   numGoals: 5
   maxMirrors: 3
   txtTrackMirrorCount: {fileID: 284754302}

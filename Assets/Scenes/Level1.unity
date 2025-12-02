@@ -343,6 +343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mirrorPrefab: {fileID: 6406798652635886279, guid: e08760661ef069f47901a65ffa081e6f, type: 3}
   heightOffset: 0.7
+  alternateCubePrefab: {fileID: 0}
 --- !u!65 &111011719
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -647,6 +648,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mirrorPrefab: {fileID: 6406798652635886279, guid: e08760661ef069f47901a65ffa081e6f, type: 3}
   heightOffset: 0.7
+  alternateCubePrefab: {fileID: 0}
 --- !u!65 &480517317
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -774,6 +776,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mirrorPrefab: {fileID: 6406798652635886279, guid: e08760661ef069f47901a65ffa081e6f, type: 3}
   heightOffset: 0.7
+  alternateCubePrefab: {fileID: 0}
 --- !u!65 &492716726
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1139,6 +1142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mirrorPrefab: {fileID: 6406798652635886279, guid: e08760661ef069f47901a65ffa081e6f, type: 3}
   heightOffset: 0.7
+  alternateCubePrefab: {fileID: 0}
 --- !u!65 &655251247
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1266,6 +1270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mirrorPrefab: {fileID: 6406798652635886279, guid: e08760661ef069f47901a65ffa081e6f, type: 3}
   heightOffset: 0.7
+  alternateCubePrefab: {fileID: 0}
 --- !u!65 &690049527
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1534,6 +1539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mirrorPrefab: {fileID: 6406798652635886279, guid: e08760661ef069f47901a65ffa081e6f, type: 3}
   heightOffset: 0.7
+  alternateCubePrefab: {fileID: 0}
 --- !u!65 &789256933
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1661,6 +1667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mirrorPrefab: {fileID: 6406798652635886279, guid: e08760661ef069f47901a65ffa081e6f, type: 3}
   heightOffset: 0.7
+  alternateCubePrefab: {fileID: 0}
 --- !u!65 &800594052
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1788,6 +1795,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mirrorPrefab: {fileID: 6406798652635886279, guid: e08760661ef069f47901a65ffa081e6f, type: 3}
   heightOffset: 0.7
+  alternateCubePrefab: {fileID: 0}
 --- !u!65 &847100435
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1950,6 +1958,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turretPrefabs:
   - {fileID: 731625171}
+  lasers: []
+  goalsHit_display: []
+  notHitMaterial: {fileID: 2100000, guid: 3f6eb2d4008904d45b4ef90cbe1853a7, type: 2}
+  playButton: {fileID: 0}
   numGoals: 1
   maxMirrors: 2
   txtTrackMirrorCount: {fileID: 284754302}
@@ -2361,6 +2373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mirrorPrefab: {fileID: 6406798652635886279, guid: e08760661ef069f47901a65ffa081e6f, type: 3}
   heightOffset: 0.7
+  alternateCubePrefab: {fileID: 0}
 --- !u!65 &1344635872
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2545,6 +2558,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mirrorPrefab: {fileID: 6406798652635886279, guid: e08760661ef069f47901a65ffa081e6f, type: 3}
   heightOffset: 0.7
+  alternateCubePrefab: {fileID: 0}
 --- !u!65 &1400853964
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2862,6 +2876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mirrorPrefab: {fileID: 6406798652635886279, guid: e08760661ef069f47901a65ffa081e6f, type: 3}
   heightOffset: 0.7
+  alternateCubePrefab: {fileID: 0}
 --- !u!65 &1530261273
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2989,6 +3004,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mirrorPrefab: {fileID: 6406798652635886279, guid: e08760661ef069f47901a65ffa081e6f, type: 3}
   heightOffset: 0.7
+  alternateCubePrefab: {fileID: 0}
 --- !u!65 &1566127396
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3249,6 +3265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mirrorPrefab: {fileID: 6406798652635886279, guid: e08760661ef069f47901a65ffa081e6f, type: 3}
   heightOffset: 0.7
+  alternateCubePrefab: {fileID: 0}
 --- !u!65 &1940454039
 BoxCollider:
   m_ObjectHideFlags: 0
