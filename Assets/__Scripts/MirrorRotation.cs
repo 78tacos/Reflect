@@ -37,11 +37,27 @@ public class MirrorRotation : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            RotateBy(rotationStep);
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            {
+                Destroy(transform.parent.gameObject);
+                Main.Manage.decMirror();
+                return;
+            } else
+            {
+                RotateBy(rotationStep);
+            }
         } 
         else if (Input.GetMouseButtonDown(1))
         {
-            RotateBy(-rotationStep);
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            {
+                Destroy(transform.parent.gameObject);
+                Main.Manage.decMirror();
+                return;
+            } else
+            {
+                RotateBy(-rotationStep);
+            }
         }
     }
 
