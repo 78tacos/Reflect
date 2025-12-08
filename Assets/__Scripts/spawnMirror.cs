@@ -8,6 +8,10 @@ public class spawnMirror : MonoBehaviour
     private GameObject mirrorRef;
     public float heightOffset = 1.5f;
 
+    [Header("Cube Swap (Editor Only)")]
+    [Tooltip("The prefab to swap this cube with (OS Cube <-> Null Cube)")]
+    public GameObject alternateCubePrefab;
+
     public void OnMouseOver()
     {
 
@@ -45,4 +49,33 @@ public class spawnMirror : MonoBehaviour
         Destroy(this.mirrorRef);
         Main.Manage.decMirror();
     }
+
+#if UNITY_EDITOR
+    [ContextMenu("Swap Cube Type")]
+    void SwapCubeType()
+    {
+        if (alternateCubePrefab == null)
+        {
+            Debug.LogWarning("No alternate cube prefab assigned! Assign it in the inspector first.");
+            return;
+        }
+
+        // Store current position, rotation, and scale
+        Vector3 currentPosition = transform.position;
+        Quaternion currentRotation = transform.rotation;
+        Vector3 currentScale = transform.localScale;
+        Transform currentParent = transform.parent;
+        int siblingIndex = transform.GetSiblingIndex();
+
+        // Instantiate the alternate cube at the same position
+        GameObject newCube = Instantiate(alternateCubePrefab, currentPosition, currentRotation, currentParent);
+        newCube.transform.localScale = currentScale;
+        newCube.transform.SetSiblingIndex(siblingIndex);
+
+        // Destroy this cube
+        DestroyImmediate(gameObject);
+
+        Debug.Log($"Swapped cube at position {currentPosition}");
+    }
+#endif
 }

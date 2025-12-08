@@ -541,7 +541,7 @@ namespace VolumetricLines
 
 				if (laserPrefab != null)
                 {
-                    Instantiate(laserPrefab, spawnPosition, spawnRotation);
+                    Main.Manage.lasers.Add(Instantiate(laserPrefab, spawnPosition, spawnRotation));
                 }
 
             } else if (other.CompareTag("wall"))
