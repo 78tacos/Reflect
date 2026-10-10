@@ -43,19 +43,17 @@ public class nullBlockFeat : MonoBehaviour
             return;
         }
 
-        // Store current position, rotation, and scale
+        // Keep transform and sibling order so the replacement occupies the same slot.
         Vector3 currentPosition = transform.position;
         Quaternion currentRotation = transform.rotation;
         Vector3 currentScale = transform.localScale;
         Transform currentParent = transform.parent;
         int siblingIndex = transform.GetSiblingIndex();
 
-        // Instantiate the OS cube at the same position
         GameObject newCube = Instantiate(osCubePrefab, currentPosition, currentRotation, currentParent);
         newCube.transform.localScale = currentScale;
         newCube.transform.SetSiblingIndex(siblingIndex);
 
-        // Destroy this null cube
         DestroyImmediate(gameObject);
 
         Debug.Log($"Swapped null cube to OS cube at position {currentPosition}");

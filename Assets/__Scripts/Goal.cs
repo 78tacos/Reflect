@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
-    // Start is called before the first frame update
-
     public Material notHitMaterial;
     public Material hitMaterial;
 
@@ -23,7 +21,6 @@ public class Goal : MonoBehaviour
     {
         if (isActivated) return;
 
-        //Debug.Log("Goal has been hit.");
         rend.material = hitMaterial;
         this.isActivated = true;
 

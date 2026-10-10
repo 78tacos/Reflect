@@ -1,2 +1,3 @@
 # Reflect
-A game where you must reflect the light into the goal
+
+Reflect lasers into the goal using mirrors.
