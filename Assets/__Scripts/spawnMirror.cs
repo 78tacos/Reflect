@@ -60,19 +60,17 @@ public class spawnMirror : MonoBehaviour
             return;
         }
 
-        // Store current position, rotation, and scale
+        // Keep transform and sibling order so the replacement occupies the same slot.
         Vector3 currentPosition = transform.position;
         Quaternion currentRotation = transform.rotation;
         Vector3 currentScale = transform.localScale;
         Transform currentParent = transform.parent;
         int siblingIndex = transform.GetSiblingIndex();
 
-        // Instantiate the alternate cube at the same position
         GameObject newCube = Instantiate(alternateCubePrefab, currentPosition, currentRotation, currentParent);
         newCube.transform.localScale = currentScale;
         newCube.transform.SetSiblingIndex(siblingIndex);
 
-        // Destroy this cube
         DestroyImmediate(gameObject);
 
         Debug.Log($"Swapped cube at position {currentPosition}");

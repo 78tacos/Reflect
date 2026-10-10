@@ -3,23 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// This script handles mirror rotation in the puzzle grid.
-/// 
-/// It is placed on a child object that contains a larger click collider, 
-/// allowing the mirror to be easy to select without affecting laser mechanics
-/// 
-/// The script rotates the parent mirror object, not the child collider, 
-/// ensuring the visual mirror and laser reflection collider stay aligned. 
-/// 
-/// Rotation can be instant or smoothly animated, using a coroutine
+/// Rotates the parent mirror from a child with a larger click collider,
+/// so the mirror is easy to select without changing the laser hit volume.
 /// </summary>
 
 public class MirrorRotation : MonoBehaviour
 {
     [Header("Rotation Settings")]
-    public float rotationStep = 45f;    // Degrees rotated each step
+    public float rotationStep = 45f;
     public bool smooth = true;
-    public float smoothDuration = 0.12f;    // Time for rotation animation
+    public float smoothDuration = 0.12f;
 
     private bool isRotating = false;
 
@@ -69,22 +62,12 @@ public class MirrorRotation : MonoBehaviour
 
         float currentY = mirror.eulerAngles.y;
 
-        // if (((currentY) % 90f) != 0f) 
-        // {
-        //     parentMirror.mirrorType = MirrorType.Reflect;
-        // } 
-        // else
-        // {
-        //     parentMirror.mirrorType = MirrorType.Redirect;
-        // }
-
         parentMirror.mirrorType = (parentMirror.mirrorType == MirrorType.Reflect) ? MirrorType.Redirect : MirrorType.Reflect;
 
         float newY = (currentY + degrees) % 360f;
 
         if (newY < 0) newY += 360f;
 
-        // Smooth or Instant animation
         if (smooth)
             StartCoroutine(RotateCoroutine(mirror, newY));
         else
@@ -99,25 +82,15 @@ public class MirrorRotation : MonoBehaviour
         Quaternion end = Quaternion.Euler(0f, targetY, 0f);
         float t = 0f;
 
-        // Runs duration of the animation
         while (t < smoothDuration)
         {
             t += Time.deltaTime;
             float alpha = Mathf.SmoothStep(0f, 1f, t / smoothDuration);
             mirror.rotation = Quaternion.Lerp(start, end, alpha);
-            yield return null;  // Waits until next frame
+            yield return null;
         }
 
         mirror.rotation = end;  // Ensures mirror lands on final rotation
         isRotating = false;
-
-        // if ((Mathf.Abs(transform.eulerAngles.y) % 90f) == 0f) 
-        // {
-        //     parentMirror.mirrorType = MirrorType.Reflect;
-        // } 
-        // else
-        // {
-        //     parentMirror.mirrorType = MirrorType.Redirect;
-        // }
     }
 }
